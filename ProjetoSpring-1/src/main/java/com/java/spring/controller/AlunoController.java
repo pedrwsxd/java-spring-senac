@@ -50,7 +50,7 @@ public class AlunoController {
 	  
 	  @DeleteMapping("/deletar/{id}")
 	  @Transactional 
-	  public void excluir (@PathVariable Long id) {
+	  public void excluir (@PathVariable("id") Long id) {
 		  alunoRepository.deleteById(id);
 	  } 
 	  
