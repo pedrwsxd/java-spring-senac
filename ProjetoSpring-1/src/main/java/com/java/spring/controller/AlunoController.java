@@ -39,8 +39,15 @@ public class AlunoController {
 	
 	  @GetMapping("/listar")
 	    public List<DadosListagemAluno> listar(){
-	    	return  alunoRepository.findAll().stream().map(DadosListagemAluno::new).toList();
+	    	return  alunoRepository.findAllByAtivoTrue().stream().map(DadosListagemAluno::new).toList();
 	    }
+	  
+	  @GetMapping("listar/{id}")
+	  public ResponseEntity<DadosListagemAluno> encontrarPorId(@PathVariable("id") Long id){
+		  var aluno = alunoRepository.findById(id).map(DadosListagemAluno::new);
+		  return aluno.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+	  }
+	  
 	  @PutMapping("/atualizar")
 	  @Transactional
 	  public void atualizar (@RequestBody @Valid DadosAtualizacaoAluno dados) {
@@ -51,7 +58,9 @@ public class AlunoController {
 	  @DeleteMapping("/deletar/{id}")
 	  @Transactional 
 	  public void excluir (@PathVariable("id") Long id) {
-		  alunoRepository.deleteById(id);
+		 var aluno = alunoRepository.getReferenceById(id);
+		  aluno.excluir();
+		  
 	  } 
 	  
 }

@@ -30,7 +30,8 @@ public class Aluno {
 
     @Enumerated(EnumType.STRING)
     private Curso Curso;
-
+    
+    private Boolean ativo = true;
     @Embedded
     private Endereco endereco;
 
@@ -94,6 +95,11 @@ public class Aluno {
 	public Endereco getEndereco() {
 		// TODO Auto-generated method stub
 		return endereco;
+	}
+
+	public void excluir() {
+		this.ativo = false;
+		
 	}
 
 
